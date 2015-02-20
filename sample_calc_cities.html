@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>
+			Title
+		</title>
+		<style>
+			body {
+				font-family: arial, sans-serif;
+			}
+/*			.result_tables {
+				border: 1px solid black;
+				border-collapse: collapse;
+				padding: 3px;
+			}
+*/			/*div {
+				border: 1px solid black;
+			}*/
+		</style>
+	</head>
+	<body>
+		<h1>
+			Калькулятор выборки
+		</h1>
+		<p>База по состоянию на 2014-01-01</p>
+
+
+		<div style="display: inline-block; vertical-align: top;">
+			<div>
+				Пол и возраст
+				<br>
+				От <input type="number" min="0" max="80" name="filter_age" id="filter_age_min" value="18" style="width: 3em;">
+				До <input type="number" min="0" max="80" name="filter_age" id="filter_age_max" value="55" style="width: 3em;">
+				<br>
+				<label><input type="checkbox" name="filter_gender" value="M" onclick="gender_checkbox_switch('M')" checked>Мужчины</label><br>
+				<label><input type="checkbox" name="filter_gender" value="F" onclick="gender_checkbox_switch('F')" checked>Женщины</label><br>
+				Задать интервалы:<br>
+				<input type="text" id="age_quota_textfield">
+			</div>
+
+			<div>
+				<div>
+					Выбрать города
+					<table>
+					<tr><td>Город</td><td>Область</td><td>Население</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Київ" checked>Київ</label></td><td>Київ</td><td>2868702</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Харків" checked>Харків</label></td><td>Харківська</td><td>1451132</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Одеса" checked>Одеса</label></td><td>Одеська</td><td>1017022</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Дніпропетровськ" checked>Дніпропетровськ</label></td><td>Дніпропетровська</td><td>993094</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Донецьк" checked>Донецьк</label></td><td>Донецька</td><td>949825</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Запоріжжя" checked>Запоріжжя</label></td><td>Запорізька</td><td>766268</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Львів" checked>Львів</label></td><td>Львівська</td><td>729038</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Кривий Ріг">Кривий Ріг</label></td><td>Дніпропетровська</td><td>652137</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Миколаїв">Миколаїв</label></td><td>Миколаївська</td><td>494922</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Маріуполь">Маріуполь</label></td><td>Донецька</td><td>458533</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Луганськ">Луганськ</label></td><td>Луганська</td><td>424113</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Вінниця">Вінниця</label></td><td>Вінницька</td><td>372116</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Макіївка">Макіївка</label></td><td>Донецька</td><td>351820</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Севастополь">Севастополь</label></td><td>АР Крим</td><td>344853</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Сімферополь">Сімферополь</label></td><td>АР Крим</td><td>338319</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Херсон">Херсон</label></td><td>Херсонська</td><td>297593</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Полтава">Полтава</label></td><td>Полтавська</td><td>295950</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Чернігів">Чернігів</label></td><td>Чернігівська</td><td>295670</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Черкаси">Черкаси</label></td><td>Черкаська</td><td>285170</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Житомир">Житомир</label></td><td>Житомирська</td><td>270922</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Суми">Суми</label></td><td>Сумська</td><td>268874</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Хмельницький">Хмельницький</label></td><td>Хмельницька</td><td>266095</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Чернівці">Чернівці</label></td><td>Чернівецька</td><td>262129</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Горлівка">Горлівка</label></td><td>Донецька</td><td>254416</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Рівне">Рівне</label></td><td>Рівненська</td><td>249912</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Дніпродзержинськ">Дніпродзержинськ</label></td><td>Дніпропетровська</td><td>241475</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Кіровоград">Кіровоград</label></td><td>Кіровоградська</td><td>233333</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Івано-Франківськ">Івано-Франківськ</label></td><td>Івано-Франківська</td><td>227030</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Кременчук">Кременчук</label></td><td>Полтавська</td><td>225828</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Тернопіль">Тернопіль</label></td><td>Тернопільська</td><td>217110</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Луцьк">Луцьк</label></td><td>Волинська</td><td>216076</td></tr>
+					<tr><td><label><input type="checkbox" name="filter_city" value="Біла Церква">Біла Церква</label></td><td>Київська</td><td>211205</td></tr>
+					</table>
+				</div>
+			</div>
+		</div>
+
+
+		<div>
+			Размер выборки <input type="number" min="1" id="sample_size" value="1200" style="width: 6em;">
+		</div>
+
+		<button type="button" onclick="main_calc()">
+			Calc
+		</button>
+
+		<div id="result_table_final_result"></div>
+
+
+		<!-- <textarea rows="20" cols="120" id="debug_output"></textarea> -->
+
+
+		<script src="data.js"></script>
+
+		<script>
+			var debug_output = document.getElementById("debug_output");
+
+			function gender_checkbox_switch(current_gender) {
+				var filter_gender_checkbox = document.getElementsByName("filter_gender");
+
+				if (filter_gender_checkbox[0].checked == false && filter_gender_checkbox[1].checked == false && current_gender == "M")
+					filter_gender_checkbox[1].checked = true;
+
+				if (filter_gender_checkbox[0].checked == false && filter_gender_checkbox[1].checked == false && current_gender == "F")
+					filter_gender_checkbox[0].checked = true;
+			}
+		</script>
+
+
+		<script>
+			function main_calc() {
+				function general_population_selection() {
+					// constructing filters
+					var filter_city = {};
+
+					var filter_city_checkbox = document.getElementsByName("filter_city");
+					for (var i = 0; i < filter_city_checkbox.length; i++) {
+						filter_city[filter_city_checkbox[i].value] = filter_city_checkbox[i].checked;
+					}
+
+					// filtering db
+					for (var i = 0; i < db_pop.length; i++) {
+						if (filter_city[db_pop[i]["name"]]) {
+							db_pop_filtered.push(db_pop[i]);
+						}
+					}
+				}
+
+				function set_target_audience() {
+					var filter_gender_age = {"gender":{}};
+
+					var filter_gender_checkbox = document.getElementsByName("filter_gender");
+					for (var i = 0; i < filter_gender_checkbox.length; i++) {
+						filter_gender_age["gender"][filter_gender_checkbox[i].value] = filter_gender_checkbox[i].checked ? true : false;
+					}
+
+					filter_gender_age["age_min"] = Number(document.getElementById("filter_age_min").value);
+					filter_gender_age["age_max"] = Number(document.getElementById("filter_age_max").value);
+
+					if (document.getElementById("age_quota_textfield").value == "") {
+						document.getElementById("age_quota_textfield").value = filter_gender_age["age_min"] + "-" + filter_gender_age["age_max"];
+					}
+
+					function calc_gender_age_key_fraction(filter_gender_age) {
+						var gender_age_key_fraction = {};
+
+						function age_range_check(age) {
+							return age >= filter_gender_age["age_min"] && age <= filter_gender_age["age_max"];
+						}
+
+						for (var i = 0; i < db_gender_age.length; i++) {
+							if (gender_age_key_fraction[db_gender_age[i]["gender_age_key"]] == undefined)
+								gender_age_key_fraction[db_gender_age[i]["gender_age_key"]] = 0;
+
+							if (filter_gender_age["gender"][db_gender_age[i]["gender"]] && age_range_check(db_gender_age[i]["age"]))
+								gender_age_key_fraction[db_gender_age[i]["gender_age_key"]] += db_gender_age[i]["fraction"];
+						}
+
+						return gender_age_key_fraction;
+					}
+
+					var gender_age_key_fraction = calc_gender_age_key_fraction(filter_gender_age);
+
+					for (var i = 0; i < db_pop_filtered.length; i++) {
+						db_pop_filtered[i]["target_audience"] = db_pop_filtered[i]["population"] * gender_age_key_fraction[db_pop_filtered[i]["gender_age_key"]];
+					}
+				}
+
+				function calc_total(key) {
+					var cnt_general_population = 0;
+
+					for (var i = 0; i < db_pop_filtered.length; i++) {
+						cnt_general_population += db_pop_filtered[i][key];
+					}
+
+					return cnt_general_population;
+				}
+
+				var db_pop_filtered = [];
+
+				general_population_selection();
+
+				set_target_audience();
+
+				// calc sample size per city
+				var cnt_total = calc_total("target_audience");
+				var sample_size = Number(document.getElementById("sample_size").value);
+
+				for (var i = 0; i < db_pop_filtered.length; i++) {
+					db_pop_filtered[i]["sample_percent"] = db_pop_filtered[i]["target_audience"] / cnt_total;
+					db_pop_filtered[i]["sample"] = db_pop_filtered[i]["sample_percent"] * sample_size;
+				}
+				// debug_output.value = JSON.stringify(db_pop_filtered);
+
+				var quotas_list = [];
+
+				function set_quotas() {
+					function parse_quotas() {
+						var age_quotas_array = document.getElementById("age_quota_textfield").value.split(" ");
+
+						for (var i = 0; i < age_quotas_array.length; i++) {
+							if (age_quotas_array[i].indexOf("+") != -1) age_quotas_array[i] = age_quotas_array[i].split("+")[0] + "-80";
+						}
+
+						var gender_list = [];
+
+						var element = document.getElementsByName("filter_gender");
+						for (var i = 0; i < element.length; i++) {
+							if (element[i].checked) gender_list.push(element[i].value);
+						}
+
+						for (var i = 0; i < age_quotas_array.length; i++) {
+							for (var j = 0; j < gender_list.length; j++) {
+								quotas_list.push(gender_list[j] + " " + age_quotas_array[i])
+							}
+						}
+					}
+
+					function construct_filter_gender_age(quota) {
+						var filter_gender_age = {"gender":{}};
+						filter_gender_age["gender"]["M"] = quota.split(" ")[0] == "M";
+						filter_gender_age["gender"]["F"] = quota.split(" ")[0] == "F";
+						filter_gender_age["age_min"] = Number(quota.split(" ")[1].split("-")[0]);
+						filter_gender_age["age_max"] = Number(quota.split(" ")[1].split("-")[1]);
+						return filter_gender_age;
+					}
+
+					function age_range_check(age) {
+						return age >= filter_gender_age["age_min"] && age <= filter_gender_age["age_max"];
+					}
+
+					function calc_gender_age_key_fraction(filter_gender_age) {
+						var gender_age_key_fraction = {};
+
+						for (var i = 0; i < db_gender_age.length; i++) {
+							if (gender_age_key_fraction[db_gender_age[i]["gender_age_key"]] == undefined)
+								gender_age_key_fraction[db_gender_age[i]["gender_age_key"]] = 0;
+
+							if (filter_gender_age["gender"][db_gender_age[i]["gender"]] && age_range_check(db_gender_age[i]["age"]))
+								gender_age_key_fraction[db_gender_age[i]["gender_age_key"]] += db_gender_age[i]["fraction"];
+						}
+
+						return gender_age_key_fraction;
+					}
+
+					parse_quotas();
+
+					var gender_age_key_fraction = {};
+
+					for (var i = 0; i < quotas_list.length; i++) {
+						var filter_gender_age = construct_filter_gender_age(quotas_list[i]);
+						gender_age_key_fraction[quotas_list[i]] = calc_gender_age_key_fraction(filter_gender_age);
+					}
+
+					var sum = {};
+
+					for (var quota_key in gender_age_key_fraction) {
+						for (var id in gender_age_key_fraction[quota_key]) {
+							if (!sum.hasOwnProperty(id)) sum[id] = 0;
+							sum[id] += gender_age_key_fraction[quota_key][id];
+						}
+					}
+
+					for (var quota_key in gender_age_key_fraction) {
+						for (var id in gender_age_key_fraction[quota_key]) {
+							gender_age_key_fraction[quota_key][id] /= sum[id];
+						}
+					}
+
+					for (var i = 0; i < quotas_list.length; i++) {
+						for (var j = 0; j < db_pop_filtered.length; j++) {
+							db_pop_filtered[j][quotas_list[i]] = db_pop_filtered[j]["sample"] * gender_age_key_fraction[quotas_list[i]][db_pop_filtered[j]["gender_age_key"]];
+						}
+					}
+				}
+
+				set_quotas();
+
+
+				var sample_cells = [];
+
+				for (var i = 0; i < db_pop_filtered.length; i++) {
+					for (var j = 0; j < quotas_list.length; j++) {
+						sample_cells.push({"cluster_id": i, "quota_key": quotas_list[j], "sample": db_pop_filtered[i][quotas_list[j]]});
+					}
+				}
+
+				function round_sample() {
+					function random_rounding() {
+						var cells_length = sample_cells.length;
+						for (var i = 0; i < cells_length; i++) {
+							sample_cells[i]["is_rounded"] = false;
+						}
+
+						function getRandomInt(min, max) {
+							return Math.floor(Math.random() * (max - min)) + min;
+						}
+
+						var k = 0;
+						var residue = 0;
+
+						while (k < cells_length) {
+							var index = getRandomInt(0, cells_length);
+							if (sample_cells[index]["is_rounded"]) continue;
+							sample_cells[index]["rounded_sample"] = Math.round(sample_cells[index]["sample"] + residue);
+							residue = sample_cells[index]["sample"] + residue - sample_cells[index]["rounded_sample"];
+							sample_cells[index]["is_rounded"] = true;
+							k++;
+						}
+					}
+
+					function calc_distrib(key) {
+						var distrib = {};
+
+						for (var i = 0; i < sample_cells.length; i++) {
+							var d1_id = "cluster_id" + sample_cells[i]["cluster_id"];
+							var d2_id = "quota_key" + sample_cells[i]["quota_key"];
+							if (!distrib.hasOwnProperty(d1_id)) distrib[d1_id] = 0;
+							if (!distrib.hasOwnProperty(d2_id)) distrib[d2_id] = 0;
+							distrib[d1_id] += sample_cells[i][key];
+							distrib[d2_id] += sample_cells[i][key];
+						}
+
+						return distrib;
+					}
+
+					var ref_distrib = calc_distrib("sample");
+
+					function rounding_diff() {
+						var diff = 0;
+						var cur_distrib = calc_distrib("rounded_sample");
+
+						for (var key in ref_distrib) {
+							diff += Math.pow(ref_distrib[key] - cur_distrib[key], 2);
+						}
+
+						return diff;
+					}
+
+					function save_best_result() {
+						for (var i = 0; i < sample_cells.length; i++) sample_cells[i]["rounded_sample_best"] = sample_cells[i]["rounded_sample"];
+					}
+
+					random_rounding();
+					save_best_result();
+					var best_diff = rounding_diff();
+					var cur_diff = best_diff;
+
+					// console.log(JSON.stringify(sample_cells));
+
+					for (var i = 0; i < 100; i++) {
+						random_rounding();
+						cur_diff = rounding_diff();
+						if (cur_diff < best_diff) {
+							save_best_result();
+							best_diff = cur_diff;
+							i = 0;
+						}
+					}
+
+					for (var i = 0; i < sample_cells.length; i++) {
+						db_pop_filtered[sample_cells[i]["cluster_id"]][sample_cells[i]["quota_key"]] = sample_cells[i]["rounded_sample_best"];
+					}
+				}
+
+				round_sample();
+
+				for (var i = 0; i < db_pop_filtered.length; i++) {
+					var sum = 0;
+					for (var j = 0; j < quotas_list.length; j++) sum += db_pop_filtered[i][quotas_list[j]];
+					db_pop_filtered[i]["rounded_sample"] = sum;
+				}
+
+
+				function construct_cell(data) {
+					var td = document.createElement("td");
+					var cell = document.createTextNode(data);
+					td.appendChild(cell);
+					return td;
+				}
+
+				function construct_row(data) {
+					var tr = document.createElement("tr");
+					for (var i = 0; i < data.length; i++) {
+						tr.appendChild(construct_cell(data[i]));
+					}
+					return tr;
+				}
+
+				function display_table_final_result() {
+					var result_element = document.getElementById("result_table_final_result");
+					result_element.innerHTML = "";
+
+					var table = document.createElement("table");
+
+					var header = ["Название", "Область", "Население", "Генеральная совокупность", "Выборка", "Доля"];
+
+					var quotas_list_header = [];
+
+					for (var i = 0; i < quotas_list.length; i++) {
+						var pair = quotas_list[i].split("-");
+						if (pair[1] == "80") quotas_list_header.push(pair[0] + "+")
+						else quotas_list_header.push(quotas_list[i]);
+					}
+
+					table.appendChild(construct_row(header.concat(quotas_list_header, "Всего")));
+
+					for (var i = 0; i < db_pop_filtered.length; i++) {
+						var row = [];
+						row.push(db_pop_filtered[i]["name"]);
+						row.push(db_pop_filtered[i]["oblast"]);
+						row.push(db_pop_filtered[i]["population"]);
+						row.push(db_pop_filtered[i]["target_audience"].toFixed(0));
+						row.push(db_pop_filtered[i]["sample"].toFixed(2));
+						row.push((db_pop_filtered[i]["sample_percent"] * 100).toFixed(2) + "%");
+						for (var j = 0; j < quotas_list.length; j++) row.push(db_pop_filtered[i][quotas_list[j]]);
+						row.push(db_pop_filtered[i]["rounded_sample"]);
+						table.appendChild(construct_row(row));
+					}
+
+					// console.log()
+					// debug_output.value = JSON.stringify(db_pop_filtered);
+
+					var sum_row = ["Всего", "", ""];
+					sum_row.push(calc_total("target_audience").toFixed(0));
+					sum_row.push(sample_size);
+					sum_row.push("100%");
+					for (var i = 0; i < quotas_list.length; i++) sum_row.push(calc_total(quotas_list[i]));
+					sum_row.push(sample_size);
+					table.appendChild(construct_row(sum_row));
+
+					result_element.appendChild(table);
+				}
+
+				display_table_final_result();
+			}
+		</script>
+	</body>
+</html>
